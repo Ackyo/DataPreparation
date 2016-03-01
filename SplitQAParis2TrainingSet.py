@@ -8,7 +8,6 @@ import re
 import os
 import codecs
 
-
 def StripPrelude(srcStr):
     try:
         prelude = u'%s' % re.findall(r'^.*?(?= )', srcStr.decode('utf8'))[0].strip()
@@ -17,15 +16,19 @@ def StripPrelude(srcStr):
         print 'Abnormal dialogue:>>>>>>>>>>>%s>>>>>>>>>>>' % srcStr.strip()
     return srcStr.strip()
 
+basePath = os.path.abspath('.')
 
-srcPath = "D:\PythonProject\LabeledData"
-srcPath = unicode(srcPath, "utf-8")
+srcPath = "%s/LabeledData" % basePath
+# srcPath = unicode(srcPath, "utf-8")
 
-resultPath = "D:\PythonProject\FinishPreProcess"
+resultPath = "%s/FinishPreProcess" % basePath
+# resultPath = unicode(resultPath, "utf-8")
 
 if os.path.exists(resultPath) == False:
     os.mkdir(resultPath)
 
+if os.path.exists(resultPath) == False:
+    os.mkdir(resultPath)
 
 def SplitQAParis2TrainingSet(srcPath, resultPath):
     # 分成两个文件，分别存放合法对话与不合法对话
@@ -47,11 +50,12 @@ def SplitQAParis2TrainingSet(srcPath, resultPath):
         for file in files:
             filePath = os.path.join(basePath, file)
             # 每次读三行，若前两行都有内容：第三行为1，第三行为0
+            print file,':'
             fp = codecs.open(filePath, 'r', 'utf8')
             line1 = fp.readline()
             line2 = fp.readline()
             line3 = fp.readline()
-            print file,':'
+
             # print line1,line2,line3
 
             total=0
